@@ -1,0 +1,48 @@
+{
+  "phcs": [
+    {
+      "id": "PHC001",
+      "name": "Bhubaneswar Urban PHC",
+      "district": "Khordha",
+      "block": "Bhubaneswar",
+      "address": "Unit-4, Bhubaneswar, Odisha 751001",
+      "phone": "0674-2536789",
+      "services": ["general_medicine", "maternal_health", "vaccination", "emergency"],
+      "timings": "24/7",
+      "asha_workers": ["Mamta Singh", "Priya Sahoo"]
+    },
+    {
+      "id": "PHC002", 
+      "name": "Kalahandi District Hospital",
+      "district": "Kalahandi",
+      "block": "Bhawanipatna",
+      "address": "Hospital Road, Bhawanipatna, Kalahandi 766001",
+      "phone": "06670-230456",
+      "services": ["general_medicine", "surgery", "pediatrics", "emergency"],
+      "timings": "24/7",
+      "asha_workers": ["Sunita Devi", "Rashmi Patel"]
+    },
+    {
+      "id": "CHC001",
+      "name": "Cuttack Community Health Centre", 
+      "district": "Cuttack",
+      "block": "Cuttack Sadar",
+      "address": "Link Road, Cuttack, Odisha 753001",
+      "phone": "0671-2345678",
+      "services": ["general_medicine", "gynecology", "orthopedics", "emergency"],
+      "timings": "6 AM - 10 PM",
+      "asha_workers": ["Rashmi Panda", "Sita Mohanty"]
+    },
+    {
+      "id": "PHC003",
+      "name": "Puri Jagannath PHC",
+      "district": "Puri", 
+      "block": "Puri Sadar",
+      "address": "Grand Road, Puri, Odisha 752001",
+      "phone": "06752-223344",
+      "services": ["general_medicine", "eye_care", "vaccination"],
+      "timings": "8 AM - 8 PM", 
+      "asha_workers": ["Priya Mohanty"]
+    }
+  ]
+}

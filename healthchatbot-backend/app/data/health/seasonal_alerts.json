@@ -1,0 +1,32 @@
+{
+  "seasonal_alerts": {
+    "monsoon": {
+      "months": [6, 7, 8, 9],
+      "diseases": ["malaria", "dengue", "chikungunya", "diarrhea", "cholera"],
+      "alerts": [
+        "🌧️ Monsoon Alert: High risk of water-borne diseases",
+        "🦟 Vector Alert: Increased mosquito breeding - use nets", 
+        "💧 Water Alert: Boil water before drinking"
+      ],
+      "precautions": ["use_mosquito_nets", "boil_water", "avoid_waterlogging", "maintain_hygiene"]
+    },
+    "summer": {
+      "months": [3, 4, 5, 6],
+      "diseases": ["heat_stroke", "dehydration", "diarrhea", "eye_infections"],
+      "alerts": [
+        "🌡️ Heat Wave Warning: Stay hydrated and avoid direct sun",
+        "👁️ Eye Care: Protect from dust and heat"
+      ],
+      "precautions": ["drink_water", "stay_indoors", "use_ORS", "protect_eyes"]
+    },
+    "winter": {
+      "months": [11, 12, 1, 2],
+      "diseases": ["cold", "cough", "pneumonia", "asthma"],
+      "alerts": [
+        "❄️ Winter Care: Keep warm and avoid cold exposure",
+        "🫁 Respiratory Alert: Higher risk of breathing problems"
+      ],
+      "precautions": ["keep_warm", "avoid_smoke", "vaccination", "hygiene"]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "seasonal_alerts": [
+    {
+      "season": "summer",
+      "common_illnesses": [
+        "heat stroke",
+        "dehydration",
+        "mosquito-borne diseases",
+        "skin rashes"
+      ],
+      "precautions": {
+        "en": "Stay hydrated, avoid direct sunlight during peak hours, use mosquito nets and repellents.",
+        "hi": "पानी अधिक पिएं, दिन के सबसे गर्म समय में धूप से बचें, मच्छरदानी और रिपेलेंट का उपयोग करें।",
+        "or": "ଅଧିକ ପାଣି ପିଅନ୍ତୁ, ଦିନର ସର୍ବାଧିକ ତାପମାତ୍ରା ସମୟରେ ସୂର୍ଯ୍ୟ ପ୍ରକାଶରୁ ବଞ୍ଚନ୍ତୁ, ମଛମାର ନେଟ ଓ ରିପେଲେଣ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ।"
+      }
+    },
+    {
+      "season": "rainy",
+      "common_illnesses": [
+        "waterborne diseases",
+        "malaria",
+        "dengue",
+        "joint pains"
+      ],
+      "precautions": {
+        "en": "Drink clean water, avoid stagnant water, use mosquito repellents, and keep surroundings clean.",
+        "hi": "साफ पानी पिएं, खड़े पानी से बचें, मच्छरदानी का उपयोग करें, और आसपास को स्वच्छ रखें।",
+        "or": "ସଫା ପାଣି ପିଅନ୍ତୁ, ଥମିଥିବା ପାଣିରୁ ବଞ୍ଚନ୍ତୁ, ମଛମାର ରିପେଲେଣ୍ଟ ବ୍ୟବହାର କରନ୍ତୁ, ଏବଂ ପରିବେଶକୁ ସଫା କରନ୍ତୁ।"
+      }
+    },
+    {
+      "season": "winter",
+      "common_illnesses": [
+        "cold",
+        "flu",
+        "pneumonia",
+        "joint stiffness"
+      ],
+      "precautions": {
+        "en": "Wear warm clothes, maintain good hygiene, avoid cold exposure, and ensure vaccination.",
+        "hi": "गर्म कपड़े पहनें, स्वच्छता बनाए रखें, ठंड से बचें, और टीकाकरण सुनिश्चित करें।",
+        "or": "ଗରମ ବସ୍ତ୍ର ପିନ୍ଧନ୍ତୁ, ଭଲ ସଫାସୁଥର ରଖନ୍ତୁ, ଠଣ୍ଡରୁ ବଞ୍ଚନ୍ତୁ, ଟିକାକୃତି ସୁନିଶ୍ଚିତ କରନ୍ତୁ।"
+      }
+    }
+  ],
+  "contacts": {
+    "kalahandi": {
+      "name": "Sunita Devi",
+      "phone": "9437123456",
+      "available": "7 AM - 7 PM (Emergency: 24/7)",
+      "specializes": "Maternal health, Child nutrition, Vaccination"
+    },
+    "khordha": {
+      "name": "Mamta Singh",
+      "phone": "9437123457",
+      "available": "8 AM - 6 PM",
+      "specializes": "Diabetes, Blood Pressure"
+    },
+    "puri": {
+      "name": "Priya Mohanty",
+      "phone": "9437123459",
+      "available": "8 AM - 6 PM",
+      "specializes": "Family planning, Reproductive health"
+    }
+  }
+}

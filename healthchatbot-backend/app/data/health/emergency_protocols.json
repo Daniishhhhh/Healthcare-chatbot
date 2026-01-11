@@ -1,0 +1,41 @@
+{
+  "emergency_keywords": {
+    "en": [
+      "chest pain",
+      "heart attack",
+      "stroke",
+      "breathing difficulty",
+      "unconscious",
+      "severe pain",
+      "poisoning",
+      "bleeding"
+    ],
+    "hi": [
+      "सीने में दर्द",
+      "दिल का दौरा",
+      "स्ट्रोक",
+      "सांस लेने में तकलीफ",
+      "बेहोशी",
+      "तेज दर्द",
+      "जहर",
+      "रक्तस्राव"
+    ],
+    "or": [
+      "ଛାତି ଯନ୍ତ୍ରଣା",
+      "ହୃଦଘାତ",
+      "ସ୍ଟ୍ରୋକ୍",
+      "ଶ୍ୱାସ ନେବାରେ କଷ୍ଟ",
+      "ଅଚେତନତା",
+      "ତୀବ୍ର ପୀଡ଼ା",
+      "ବିଷାକ୍ତତା",
+      "ରକ୍ତସ୍ରାତ"
+    ]
+  },
+  "escalation_actions": {
+    "default": {
+      "recommended_action": "Seek immediate medical attention.",
+      "asha_contact": true,
+      "immediate_referral": true
+    }
+  }
+}

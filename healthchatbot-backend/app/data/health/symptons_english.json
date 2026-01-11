@@ -1,0 +1,72 @@
+{
+  "fever": {
+    "symptom": "fever",
+    "response": "For fever, drink plenty of fluids and rest. Seek medical attention if fever exceeds 102°F or persists for more than 3 days.",
+    "severity": "moderate",
+    "emergency": false,
+    "cultural_advice": "Use paracetamol as recommended by healthcare provider. Monitor temperature regularly."
+  },
+  "headache": {
+    "symptom": "headache",
+    "response": "For headaches, try resting in a quiet, dark room and staying hydrated. If persistent or severe, consult a doctor.",
+    "severity": "mild",
+    "emergency": false,
+    "cultural_advice": "Apply cold compress to forehead. Contact ASHA worker if needed."
+  },
+  "cough": {
+    "symptom": "cough",
+    "response": "For cough, drink warm water and take ginger tea with honey. If cough persists for more than 2 weeks, seek medical advice.",
+    "severity": "mild",
+    "emergency": false,
+    "cultural_advice": "Herbal remedies with tulsi and turmeric may help. Avoid smoking."
+  },
+  "chest pain": {
+    "symptom": "chest_pain",
+    "response": "🚨 Chest pain can be serious. Seek immediate medical help, especially if accompanied by breathing difficulty or dizziness.",
+    "severity": "high",
+    "emergency": true,
+    "cultural_advice": "Go to nearest PHC or hospital immediately. Do not delay."
+  },
+  "stomach pain": {
+    "symptom": "stomach_pain",
+    "response": "For stomach pain, eat light meals and drink plenty of water. If pain is severe or persistent, consult a doctor.",
+    "severity": "moderate",
+    "emergency": false,
+    "cultural_advice": "Ginger and cumin water may help. Avoid oily foods."
+  },
+  "dizziness": {
+    "symptom": "dizziness",
+    "response": "If dizzy, sit down or lie down. Drink water slowly. If frequent, consult a doctor.",
+    "severity": "mild",
+    "emergency": false,
+    "cultural_advice": "Eat regular meals and stay hydrated. Avoid sudden movements."
+  },
+  "vomiting": {
+    "symptom": "vomiting",
+    "response": "During vomiting, take small sips of water and rest. If it continues for more than 24 hours or is accompanied by fever, see a doctor.",
+    "severity": "moderate",
+    "emergency": false,
+    "cultural_advice": "Try lemon water or ginger tea. Avoid solid foods until better."
+  },
+  "diarrhea": {
+    "symptom": "diarrhea",
+    "response": "During diarrhea, drink plenty of fluids and take ORS. If it lasts more than 3 days or contains blood, seek immediate medical help.",
+    "severity": "moderate",
+    "emergency": false,
+    "cultural_advice": "Yogurt and banana may help. Avoid spicy and oily foods."
+  },
+  "cold": {
+    "symptom": "cold",
+    "response": "For common cold, rest and drink warm fluids. Use steam inhalation. If symptoms worsen or persist beyond a week, consult a doctor.",
+    "severity": "mild",
+    "emergency": false,
+    "cultural_advice": "Warm salt water gargling helps. Herbal tea with ginger and honey provides relief."
+  },
+  "body pain": {
+    "symptom": "body_pain",
+    "response": "For body pain, take adequate rest and apply warm compress to affected areas. If pain is severe or persistent, seek medical advice.",
+    "severity": "mild",
+    "emergency": false,
+    "cultural_advice": "Gentle massage with warm oil may provide relief. Maintain proper posture."
+  }
+}

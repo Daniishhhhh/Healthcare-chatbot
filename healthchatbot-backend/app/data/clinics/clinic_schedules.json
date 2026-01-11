@@ -1,0 +1,22 @@
+{
+  "schedules": {
+    "PHC001": {
+      "monday": {"general": "9-17", "emergency": "24h"},
+      "tuesday": {"general": "9-17", "maternal": "10-16", "emergency": "24h"},
+      "wednesday": {"general": "9-17", "vaccination": "10-12", "emergency": "24h"}, 
+      "thursday": {"general": "9-17", "pediatrics": "14-17", "emergency": "24h"},
+      "friday": {"general": "9-17", "emergency": "24h"},
+      "saturday": {"general": "9-13", "emergency": "24h"},
+      "sunday": {"emergency": "24h"}
+    },
+    "PHC002": {
+      "monday": {"general": "8-20", "surgery": "10-16", "emergency": "24h"},
+      "tuesday": {"general": "8-20", "pediatrics": "9-17", "emergency": "24h"},
+      "wednesday": {"general": "8-20", "emergency": "24h"},
+      "thursday": {"general": "8-20", "surgery": "10-16", "emergency": "24h"},
+      "friday": {"general": "8-20", "emergency": "24h"},
+      "saturday": {"general": "8-16", "emergency": "24h"},
+      "sunday": {"emergency": "24h"}
+    }
+  }
+}
