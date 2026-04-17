@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swasthya Setu | Healthcare Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --accent: #00c4a7;
+      --accent-2: #7dd3fc;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --card: #0b1220;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(0,196,167,0.08), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(125,211,252,0.1), transparent 20%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .layout {
+      width: min(1200px, 100%);
+      background: linear-gradient(145deg, rgba(17,24,39,0.85), rgba(15,23,42,0.9));
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      overflow: hidden;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 22px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    header p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,196,167,0.15);
+      color: #86ffdd;
+      font-size: 12px;
+      border: 1px solid rgba(0,196,167,0.4);
+    }
+    main { display: grid; grid-template-columns: 2fr 1fr; gap: 0; }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    .chat {
+      border-right: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
+    }
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bubble {
+      padding: 14px 16px;
+      border-radius: 12px;
+      max-width: 90%;
+      line-height: 1.5;
+      backdrop-filter: blur(6px);
+    }
+    .bubble.user { margin-left: auto; background: rgba(0,196,167,0.12); border: 1px solid rgba(0,196,167,0.3); }
+    .bubble.bot { margin-right: auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+    .input-area {
+      padding: 16px 18px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+      background: rgba(0,0,0,0.15);
+    }
+    .input-area input, .input-area select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+    .input-area button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none;
+      color: #041016;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .input-area button:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,196,167,0.3); }
+    .loader {
+      display: none;
+      padding: 10px 18px;
+    }
+    .loader.active { display: flex; gap: 10px; align-items: center; }
+    .skeleton {
+      flex: 1;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .retry { display: none; color: #f87171; font-size: 13px; margin: 0 0 10px 20px; }
+    .retry button {
+      margin-left: 8px;
+      border: 1px solid rgba(248,113,113,0.4);
+      background: rgba(248,113,113,0.1);
+      color: #fecdd3;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .side {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: radial-gradient(circle at 20% 0%, rgba(0,196,167,0.08), transparent 35%), var(--panel);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .card h3 { margin: 0; font-size: 16px; }
+    .card small { color: var(--muted); }
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(125,211,252,0.12);
+      color: #bae6fd;
+      font-size: 12px;
+      border: 1px solid rgba(125,211,252,0.5);
+    }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .actions a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <header>
+      <div>
+        <h1>🏥 Swasthya Setu</h1>
+        <p>Fast, multilingual rural healthcare assistant</p>
+      </div>
+      <span class="badge" id="statusDot">Ready</span>
+    </header>
+    <main>
+      <section class="chat">
+        <div id="retry" class="retry">Request failed. <button onclick="retryLast()">Retry</button></div>
+        <div id="messages" class="messages"></div>
+        <div id="loader" class="loader">
+          <div class="skeleton" style="width: 28%;"></div>
+          <div class="skeleton" style="width: 18%;"></div>
+          <div class="skeleton" style="width: 36%;"></div>
+        </div>
+        <div class="input-area">
+          <input id="input" type="text" placeholder="Describe your symptom or ask for help..." />
+          <select id="language">
+            <option value="">Auto</option>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="or">Odia</option>
+          </select>
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </section>
+      <aside class="side">
+        <div class="card">
+          <h3>Nearby Facilities</h3>
+          <div id="hospitals" class="hospitals"></div>
+        </div>
+        <div class="card">
+          <h3>Tips</h3>
+          <small>Responses stream with a typing effect. Tap retry if a request fails. We keep only the last 3 messages for context.</small>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const messagesEl = document.getElementById('messages');
+    const loaderEl = document.getElementById('loader');
+    const retryEl = document.getElementById('retry');
+    const statusDot = document.getElementById('statusDot');
+    const inputEl = document.getElementById('input');
+    const languageEl = document.getElementById('language');
+
+    const hospitals = [
+      { name: "Kalahandi Primary Health Centre", phone: "+91-9876543210", location: "Bhawanipatna", distance: "2.4 km", map: "https://maps.google.com/?q=Bhawanipatna+PHC" },
+      { name: "Bhubaneswar Community Health Centre", phone: "+91-9876543211", location: "Bhubaneswar", distance: "4.1 km", map: "https://maps.google.com/?q=Bhubaneswar+CHC" },
+      { name: "Cuttack PHC", phone: "+91-9876543212", location: "Cuttack", distance: "7.8 km", map: "https://maps.google.com/?q=Cuttack+PHC" }
+    ];
+
+    function renderHospitals() {
+      const container = document.getElementById('hospitals');
+      container.innerHTML = '';
+      hospitals.forEach(h => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <h3>${h.name}</h3>
+              <small>${h.location}</small>
+            </div>
+            <span class="pill">${h.distance}</span>
+          </div>
+          <div class="actions">
+            <a href="tel:${h.phone}">Call</a>
+            <a href="${h.map}" target="_blank">Navigate</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function addBubble(text, isUser = false, streaming = false) {
+      const bubble = document.createElement('div');
+      bubble.className = `bubble ${isUser ? 'user' : 'bot'}`;
+      messagesEl.appendChild(bubble);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (streaming) {
+        let idx = 0;
+        const timer = setInterval(() => {
+          bubble.textContent = text.slice(0, idx);
+          idx++;
+          if (idx > text.length) clearInterval(timer);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }, 8);
+      } else {
+        bubble.textContent = text;
+      }
+    }
+
+    function loadHistory() {
+      try {
+        return JSON.parse(localStorage.getItem('chatHistory') || '[]');
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveHistory(history) {
+      localStorage.setItem('chatHistory', JSON.stringify(history.slice(-3)));
+    }
+
+    let lastPayload = null;
+
+    async function sendMessage(isRetry = false) {
+      const text = inputEl.value.trim();
+      if (!text && !isRetry) return;
+      retryEl.style.display = 'none';
+      showLoader(true);
+
+      const history = loadHistory();
+      const payload = {
+        message: isRetry && lastPayload ? lastPayload.message : text,
+        language: languageEl.value || null,
+        user_id: "web",
+        history: history.map(turn => ({ role: turn.role, content: turn.content }))
+      };
+      lastPayload = payload;
+
+      if (!isRetry) addBubble(text, true, false);
+      inputEl.value = "";
+
+      try {
+        const res = await fetch('/api/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Request failed');
+        const data = await res.json();
+        addBubble(data.response, false, true);
+        const updatedHistory = [...history, { role: 'user', content: payload.message }, { role: 'assistant', content: data.response }];
+        saveHistory(updatedHistory);
+        speak(data.response, payload.language || 'en');
+      } catch (err) {
+        retryEl.style.display = 'block';
+        addBubble('Request failed. Tap retry to try again.', false, false);
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    function retryLast() {
+      if (lastPayload) sendMessage(true);
+    }
+
+    function showLoader(show) {
+      loaderEl.classList.toggle('active', show);
+      statusDot.textContent = show ? 'Thinking…' : 'Ready';
+    }
+
+    function speak(text, lang) {
+      if (!('speechSynthesis' in window)) return;
+      const synth = window.speechSynthesis;
+      const pickVoice = () => {
+        const voices = synth.getVoices();
+        let voice = voices.find(v => v.lang.toLowerCase().startsWith(lang || 'en'));
+        if (!voice && lang === 'hi') voice = voices.find(v => v.lang.toLowerCase().startsWith('hi-in'));
+        return voice || voices.find(v => v.default) || voices[0];
+      };
+      const utter = new SpeechSynthesisUtterance(text);
+      const selectedVoice = pickVoice();
+      if (selectedVoice) utter.voice = selectedVoice;
+      utter.pitch = 1;
+      utter.rate = 0.98;
+      synth.cancel();
+      synth.speak(utter);
+    }
+
+    renderHospitals();
+    addBubble("नमस्ते! Tell me your symptom or ask for hospital info. I reply fast, stream text, and keep the last 3 messages for context.");
+    window.speechSynthesis.onvoiceschanged = () => {};
+    inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+  </script>
+</body>
+</html>

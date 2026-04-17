@@ -8,32 +8,17 @@ from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 from decouple import config
 from app.db.db import save_chat_history
-from app.services.emergency_service import check_emergency_keywords
+from app.services.pipeline import assistant_orchestrator
 import logging
 
 router = APIRouter()
 
 # Initialize Twilio client
-client = Client(config("TWILIO_ACCOUNT_SID"), config("TWILIO_AUTH_TOKEN"))
-
-# FAQ responses
-FAQ_DATA = {
-    "fever": "🌡️ Fever: Rest, drink plenty of fluids, take paracetamol. If fever >101°F for 3+ days, consult doctor immediately.",
-    "ଜ୍ୱର": "🌡️ ଜ୍ୱର: ବିଶ୍ରାମ ନିଅନ୍ତୁ, ଅଧିକ ପାଣି ପିଅନ୍ତୁ। ୧୦୧°F ଉପରେ ୩ ଦିନ ରହିଲେ ଡାକ୍ତରଙ୍କୁ ଦେଖାନ୍ତୁ।",
-    "बुखार": "🌡️ बुखार: आराम करें, पानी पिएं। 101°F से ज्यादा 3 दिन तक हो तो डॉक्टर से मिलें।",
-
-    "cough": "😷 Cough: Warm water with honey, steam inhalation. If persistent >2 weeks, see doctor.",
-    "କାଶ": "😷 କାଶ: ମହୁ ସହିତ ଗରମ ପାଣି, ବାଷ୍ପ ନିଅନ୍ତୁ। ୨ ସପ୍ତାହରୁ ଅଧିକ ରହିଲେ ଡାକ୍ତରଙ୍କୁ ଦେଖାନ୍ତୁ।",
-    "खांसी": "😷 खांसी: शहद के साथ गर्म पानी, भाप लें। 2 हफ्ते से ज्यादा हो तो डॉक्टर को दिखाएं।",
-
-    "headache": "🤕 Headache: Rest in dark room, drink water, gentle head massage. If severe, consult doctor.",
-    "ମୁଣ୍ଡବିନ୍ଧା": "🤕 ମୁଣ୍ଡବିନ୍ଧା: ଅନ୍ଧାର ଘରେ ବିଶ୍ରାମ, ପାଣି ପିଅନ୍ତୁ। ଯଦି ଅଧିକ ଯନ୍ତ୍ରଣା, ଡାକ୍ତରଙ୍କୁ ଦେଖାନ୍ତୁ।",
-
-    "appointment": "📅 For appointment booking, share your district name. Available: Kalahandi PHC, Khordha CHC, Cuttack PHC",
-    "emergency": "🚨 EMERGENCY NUMBERS:\n- Ambulance: 108\n- Medical Emergency: 102\n- COVID Helpline: 1075\nFor immediate help, call these numbers!",
-
-    "help": "🏥 SWASTHYA SETU - I can help with:\n• Health queries (fever, cough, headache)\n• Book appointments at PHC/CHC\n• Emergency assistance\n• Vaccination info\nType your symptoms or 'appointment' to book.",
-}
+try:
+    client = Client(config("TWILIO_ACCOUNT_SID"), config("TWILIO_AUTH_TOKEN"))
+except Exception:
+    client = None
+    logging.warning("Twilio credentials not configured; outbound WhatsApp disabled.")
 
 @router.post("/webhook")
 async def whatsapp_webhook(
@@ -47,32 +32,12 @@ async def whatsapp_webhook(
 
         logging.info(f"📞 Received WhatsApp message: '{Body}' from {user_phone}")
 
-        # Check for emergency keywords first
-        try:
-            is_emergency, emergency_response = await check_emergency_keywords(user_message.lower(), user_phone)
-            logging.info(f"🚨 Emergency check: {is_emergency}")
-        except Exception as e:
-            logging.error(f"Emergency check failed: {str(e)}")
-            is_emergency, emergency_response = False, ""
-
-        if is_emergency:
-            response_text = emergency_response
-            logging.info(f"🚨 Emergency response: {response_text[:100]}...")
-        else:
-            # LOCAL KEYWORD MATCHING
-            response_text = FAQ_DATA["help"]  # Default response
-            user_lower = user_message.lower()
-            
-            matched = False
-            for keyword, response in FAQ_DATA.items():
-                if keyword.lower() in user_lower:
-                    response_text = response
-                    logging.info(f"✅ Matched keyword '{keyword}' -> sending response")
-                    matched = True
-                    break
-            
-            if not matched:
-                logging.info(f"❌ No keywords matched, using default help response")
+        # Route through centralized orchestrator for consistency
+        orchestrated = await assistant_orchestrator.handle_query(
+            message=user_message, user_id=user_phone
+        )
+        response_text = orchestrated["response"]
+        logging.info(f"🔍 Orchestrated response intent={orchestrated['intent']}")
 
         logging.info(f"📤 Prepared response: {response_text[:100]}...")
 
@@ -101,6 +66,8 @@ async def whatsapp_webhook(
 @router.get("/send-test")
 async def send_test_message(to: str, message: str):
     """Test endpoint to send WhatsApp message via Twilio"""
+    if not client:
+        return {"status": "error", "message": "Twilio not configured"}
     try:
         msg = client.messages.create(
             body=message,

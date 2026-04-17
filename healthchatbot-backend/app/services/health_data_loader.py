@@ -13,8 +13,9 @@ logger = logging.getLogger(__name__)
 class HealthDataLoader:
     """Load and manage all health-related data from JSON files"""
     
-    def __init__(self, data_dir: str = "data"):
-        self.data_dir = Path(data_dir)
+    def __init__(self, data_dir: str = None):
+        base_dir = Path(__file__).resolve().parent.parent
+        self.data_dir = Path(data_dir) if data_dir else base_dir / "data"
         self.symptoms_db = {}
         self.emergency_protocols = {}
         self.asha_contacts = {}
@@ -39,6 +40,8 @@ class HealthDataLoader:
             "odia": self._load_json_file("health/symptoms_odia.json"), 
             "english": self._load_json_file("health/symptoms_english.json")
         }
+        if not self.symptoms_db.get("english"):
+            self.symptoms_db["english"] = self._load_json_file("health/symptons_english.json")
         logger.info(f"📊 Loaded symptoms for {len(self.symptoms_db)} languages")
     
     def _load_emergency_protocols(self):
